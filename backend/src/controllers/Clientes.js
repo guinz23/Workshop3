@@ -6,12 +6,14 @@ clientesController.getClientes=async(req,res)=>{
      res.status(200).json(clientes);
 }
 clientesController.createClientes=async(req,res)=>{
-    const cliente= new Clientes();
-    cliente.name="paco";
-    cliente.lastname="rojas";
-    cliente.phone=12345678;
-    await cliente.save();
-    res.status(200).json('New Client added');
+    try {
+        const {name,lastname,phone}= req.body;
+        const cliente=new Clientes({name,lastname,phone});
+        await cliente.save();
+        res.status(200).json('New Client added');
+    } catch (error) {
+        res.json(error);
+    }
 }
 
 
